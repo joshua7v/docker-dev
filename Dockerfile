@@ -16,6 +16,6 @@ RUN curl -o- https://raw.githubusercontent.com/joshua7v/dot-files/master/install
 ADD entrypoint.sh /sbin
 RUN chmod 755 /sbin/entrypoint.sh
 
-EXPOSE 22
+EXPOSE 22 7000
 ENTRYPOINT ["/sbin/entrypoint.sh"]
-VOLUME ["/home/joshua/erinn"]
+VOLUME ["/root/erinn", "/home/joshua/erinn"]
