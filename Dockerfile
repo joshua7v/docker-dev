@@ -3,7 +3,7 @@ MAINTAINER Joshua <joshua7v@hotmail.com>
 
 RUN apt-get update && apt-get install -y \ 
     vim python python-dev python-pip python-virtualenv python3 \
-    curl git build-essential nodejs-legacy npm cmake tmux
+    curl git build-essential nodejs-legacy npm cmake tmux weechat
 RUN npm i -g npm@latest
 
 ENV TERM xterm-256color
