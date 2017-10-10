@@ -8,9 +8,12 @@ RUN apk add --no-cache openssh \
   git \
   curl \
   python3 \
+  python3-dev \
   elixir \
   nodejs \
   nodejs-npm \
+  alpine-sdk \
+  && pip3 install neovim \
   && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
   && echo "root:root" | chpasswd
 
@@ -25,7 +28,7 @@ RUN git clone https://github.com/joshua7v/dot-files ~/.dot-files \
   && rm installer.sh \
   && cp ~/.dot-files/tmux.conf ~/.tmux.conf
 
-RUN npm i -g typescript elm elm-format pm2 create-react-app @angular/cli
+RUN npm i -g typescript elm elm-format pm2 create-react-app @angular/cli yarn
 
 ENV TERM xterm-256color
 
