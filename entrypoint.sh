@@ -1,12 +1,7 @@
-#!/bin/bash
+#!/bin/ash
 
-USERNAME=${USERNAME:-joshua}
-PASSWORD=${PASSWORD:-pwd}
+# generate host keys if not present
+ssh-keygen -A
 
-useradd -s /bin/bash -d /home/$USERNAME -m $USERNAME
-echo "$USERNAME:$PASSWORD" | chpasswd
-
-mv /etc/sudoers /etc/sudoers.bak
-cat /etc/sudoers.bak ; echo "$USERNAME ALL=(ALL) ALL" > /etc/sudoers
-
-/usr/sbin/sshd -D
+# do not detach (-D), log to stderr (-e), passthrough other arguments
+exec /usr/sbin/sshd -D -e "$@"

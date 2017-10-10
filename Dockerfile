@@ -1,20 +1,38 @@
-FROM joshua7v/sshd
+FROM alpine:3.6
 MAINTAINER Joshua <joshua7v@hotmail.com>
 
-RUN apt-get update && apt-get install -y \ 
-    vim python python-dev python-pip python-virtualenv python3 \
-    curl git build-essential nodejs-legacy npm cmake tmux weechat
-RUN npm i -g npm@latest
+RUN apk add --no-cache openssh \
+  bash \
+  tmux \
+  neovim \
+  git \
+  curl \
+  python3 \
+  elixir \
+  nodejs \
+  nodejs-npm \
+  && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
+  && echo "root:root" | chpasswd
+
+RUN sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
+RUN git clone https://github.com/joshua7v/dot-files ~/.dot-files \
+  && cp ~/.dot-files/bashrc ~/.bashrc \
+  && cp ~/.dot-files/bash_profile ~/.bash_profile \
+  && mkdir -p ~/.config/nvim \
+  && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
+  && curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh \
+  && bash ./installer.sh ~/.config/nvim \
+  && rm installer.sh \
+  && cp ~/.dot-files/tmux.conf ~/.tmux.conf
+
+RUN npm i -g typescript elm elm-format pm2 create-react-app @angular/cli
 
 ENV TERM xterm-256color
 
-RUN curl -o- https://raw.githubusercontent.com/joshua7v/vim/master/install.sh | bash
-RUN curl -o- https://raw.githubusercontent.com/joshua7v/vim/master/install-optional.sh | bash
-RUN curl -o- https://raw.githubusercontent.com/joshua7v/dot-files/master/install.sh | bash
-
-ADD entrypoint.sh /sbin
+COPY entrypoint.sh /sbin
 RUN chmod 755 /sbin/entrypoint.sh
 
-EXPOSE 22 80
+EXPOSE 22 3000
 ENTRYPOINT ["/sbin/entrypoint.sh"]
-VOLUME ["/root/erinn"]
+VOLUME ["/data"]
+
