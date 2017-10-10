@@ -1,11 +1,11 @@
-# Installation  
+# Installation
 
-```bash 
+```bash
 docker pull joshua7v/dev
-```  
+```
 
-# Quick Start  
+# Quick Start
 
-```bash 
-docker run —name dev -P -d -v /data:/data joshua7v/dev 
-```  
+```bash
+docker run --name dev -h dev -P -d -v /data:/data joshua7v/dev
+```
