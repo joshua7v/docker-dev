@@ -2,6 +2,8 @@ FROM ubuntu:16.04
 MAINTAINER Joshua <joshua7v@hotmail.com>
 
 ENV TERM xterm-256color
+ENV GIT_USER_NAME joshua7v
+ENV GIT_USER_EMAIL joshua7v@hotmail.com
 
 RUN apt-get update \
   && apt-get install -y openssh-server \
@@ -24,6 +26,8 @@ RUN apt-get update \
   nodejs \
   esl-erlang \
   elixir \
+  vim \
+  htop \
   neovim \
   ctags \
   silversearcher-ag \
@@ -34,7 +38,9 @@ RUN apt-get update \
   && locale-gen en_US.UTF-8 \
   && pip3 install neovim
 
-RUN git clone https://github.com/joshua7v/dot-files ~/.dot-files \
+RUN git config --global user.name $GIT_USER_NAME \
+  && git config --global user.email $GIT_USER_EMAIL \
+  && git clone https://github.com/joshua7v/dot-files ~/.dot-files \
   && cp ~/.dot-files/bashrc ~/.bashrc \
   && cp ~/.dot-files/bash_profile ~/.bash_profile \
   && mkdir -p ~/.config/nvim \
