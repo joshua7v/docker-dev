@@ -25,6 +25,8 @@ RUN apt-get update \
   esl-erlang \
   elixir \
   neovim \
+  ctags \
+  silversearcher-ag \
   && mkdir /var/run/sshd \
   && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
   && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
@@ -48,7 +50,6 @@ RUN git clone https://github.com/joshua7v/dot-files ~/.dot-files \
   @angular/cli \
   elm \
   elm-format \
-  ctags \
   jsctags \
   prettier \
   serve
