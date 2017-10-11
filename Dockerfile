@@ -29,7 +29,8 @@ RUN apt-get update \
   && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
   && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
   && echo 'root:root' |chpasswd \
-  && locale-gen en_US.UTF-8
+  && locale-gen en_US.UTF-8 \
+  && pip3 install neovim
 
 RUN git clone https://github.com/joshua7v/dot-files ~/.dot-files \
   && cp ~/.dot-files/bashrc ~/.bashrc \
@@ -46,7 +47,11 @@ RUN git clone https://github.com/joshua7v/dot-files ~/.dot-files \
   create-react-app \
   @angular/cli \
   elm \
-  elm-format
+  elm-format \
+  ctags \
+  jsctags \
+  prettier \
+  serve
 
 EXPOSE 22 3000
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
