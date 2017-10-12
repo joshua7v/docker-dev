@@ -18,6 +18,10 @@ RUN apt-get update \
   && add-apt-repository ppa:neovim-ppa/stable \
   && apt-get update \
   && apt-get install -y \
+  iputils-ping \
+  net-tools \
+  iftop \
+  iotop \
   tmux \
   git \
   python3 \
