@@ -4,6 +4,7 @@ MAINTAINER Joshua <joshua7v@hotmail.com>
 ENV TERM xterm-256color
 ENV GIT_USER_NAME joshua7v
 ENV GIT_USER_EMAIL joshua7v@hotmail.com
+ENV TZ Aisa/Shanghai
 
 RUN apt-get update \
   && apt-get install -y openssh-server \
@@ -11,6 +12,7 @@ RUN apt-get update \
   apt-transport-https \
   ca-certificates \
   locales \
+  tzdata \
   curl \
   wget \
   && curl -sL https://deb.nodesource.com/setup_8.x | bash -  \
@@ -52,9 +54,15 @@ RUN apt-get update \
   && cp rclone.1 /usr/local/share/man/man1/ \
   && mandb \
   && cd ~ \
-  && rm -fr rclone*
+  && rm -fr rclone* \
+  && apt-get clean
 
-RUN git config --global user.name $GIT_USER_NAME \
+RUN echo $TZ > /etc/timezone \
+  && rm /etc/localtime \
+  && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+  && dpkg-reconfigure -f noninteractive tzdata \
+  && apt-get clean \
+  && git config --global user.name $GIT_USER_NAME \
   && git config --global user.email $GIT_USER_EMAIL \
   && git clone https://github.com/joshua7v/dot-files ~/.dot-files \
   && cp ~/.dot-files/bashrc ~/.bashrc \
