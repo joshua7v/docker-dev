@@ -18,6 +18,7 @@ RUN apt-get update \
   && add-apt-repository ppa:neovim-ppa/stable \
   && apt-get update \
   && apt-get install -y \
+  man \
   iputils-ping \
   net-tools \
   iftop \
@@ -35,12 +36,21 @@ RUN apt-get update \
   neovim \
   ctags \
   silversearcher-ag \
+  unzip \
   && mkdir /var/run/sshd \
   && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
   && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
   && echo 'root:root' |chpasswd \
   && locale-gen en_US.UTF-8 \
-  && pip3 install neovim
+  && pip3 install neovim \
+  && cd ~ \
+  && curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip \
+  && unzip rclone-current-linux-amd64.zip \
+  && cd rclone-*-linux-amd64 \
+  && cp rclone /usr/bin/ \
+  && mkdir -p /usr/local/share/man/man1 \
+  && cp rclone.1 /usr/local/share/man/man1/ \
+  && mandb
 
 RUN git config --global user.name $GIT_USER_NAME \
   && git config --global user.email $GIT_USER_EMAIL \
