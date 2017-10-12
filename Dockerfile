@@ -50,7 +50,9 @@ RUN apt-get update \
   && cp rclone /usr/bin/ \
   && mkdir -p /usr/local/share/man/man1 \
   && cp rclone.1 /usr/local/share/man/man1/ \
-  && mandb
+  && mandb \
+  && cd ~ \
+  && rm -fr rclone*
 
 RUN git config --global user.name $GIT_USER_NAME \
   && git config --global user.email $GIT_USER_EMAIL \
