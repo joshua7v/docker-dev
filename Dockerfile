@@ -39,6 +39,8 @@ RUN apt-get update \
   ctags \
   silversearcher-ag \
   unzip \
+  inotify-tools \
+  tree \
   && mkdir /var/run/sshd \
   && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
   && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
@@ -73,6 +75,7 @@ RUN echo $TZ > /etc/timezone \
   && bash ./installer.sh ~/.config/nvim \
   && rm installer.sh \
   && cp ~/.dot-files/tmux.conf ~/.tmux.conf \
+  && mix local.hex --force \
   && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && npm i -g --unsafe-perm=true --allow-root \
   typescript \
