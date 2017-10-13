@@ -26,7 +26,6 @@ RUN apt-get update \
   net-tools \
   iftop \
   iotop \
-  tmux \
   git \
   python3 \
   python3-pip \
