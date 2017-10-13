@@ -63,7 +63,7 @@ RUN apt-get update \
   && tar -zxf tmux-$TMUX_VERSION.tar.gz \
   && cd tmux-$TMUX_VERSION \
   && ./configure && make \
-  && ln -s /root/tmux-$TMUX_VERSION/tmux /usr/bin/tmux \
+  && mv tmux /usr/bin/tmux \
   && cd ~ \
   && rm -fr tmux-$TMUX_VERSION* \
   && apt-get clean
