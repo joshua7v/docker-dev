@@ -5,6 +5,7 @@ ENV TERM xterm-256color
 ENV GIT_USER_NAME joshua7v
 ENV GIT_USER_EMAIL joshua7v@hotmail.com
 ENV TZ Aisa/Shanghai
+ENV TMUX_VERSION 2.6
 
 RUN apt-get update \
   && apt-get install -y openssh-server \
@@ -41,6 +42,8 @@ RUN apt-get update \
   unzip \
   inotify-tools \
   tree \
+  libevent-dev \
+  ncurses-dev \
   && mkdir /var/run/sshd \
   && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
   && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
@@ -57,6 +60,13 @@ RUN apt-get update \
   && mandb \
   && cd ~ \
   && rm -fr rclone* \
+  && wget https://github.com/tmux/tmux/releases/download/$TMUX_VERSION/tmux-$TMUX_VERSION.tar.gz \
+  && tar -zxf tmux-$TMUX_VERSION.tar.gz \
+  && cd tmux-$TMUX_VERSION \
+  && ./configure && make \
+  && ln -s /root/tmux-$TMUX_VERSION/tmux /usr/bin/tmux \
+  && cd ~ \
+  && rm -fr tmux-$TMUX_VERSION* \
   && apt-get clean
 
 RUN echo $TZ > /etc/timezone \
@@ -88,6 +98,7 @@ RUN echo $TZ > /etc/timezone \
   prettier \
   serve
 
+WORKDIR /data
 EXPOSE 22 3000
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
 VOLUME ["/data"]
