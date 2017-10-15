@@ -7,8 +7,6 @@ ENV GIT_USER_EMAIL joshua7v@hotmail.com
 ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
 ENV GOLANG_VERSION 1.9.1
-ENV GOPATH $HOME/.go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 RUN apt-get update \
   && apt-get install -y openssh-server \
@@ -93,6 +91,7 @@ RUN echo $TZ > /etc/timezone \
   && cp ~/.dot-files/tmux.conf ~/.tmux.conf \
   && mix local.hex --force \
   && mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force \
+  && echo -e "export GOPATH=$HOME/.go\nexport PATH=$GOPATH/bin:/usr/local/go/bin:$PATH" >> .bashrc
   && go get -u github.com/nsf/gocode \
   && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && npm i -g --unsafe-perm=true --allow-root \
