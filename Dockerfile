@@ -70,7 +70,7 @@ RUN apt-get update \
   && cd ~ \
   && rm -fr tmux-$TMUX_VERSION* \
   && wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.linux-amd64.tar.gz \
-  && tar -C /usr/local -xzf go go$GOLANG_VERSION.linux-amd64.tar.gz \
+  && tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz \
   && cd ~ \
   && rm -fr go$GOLANG_VERSION* \
   && apt-get clean
