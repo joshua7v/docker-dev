@@ -6,7 +6,10 @@ ENV GIT_USER_NAME joshua7v
 ENV GIT_USER_EMAIL joshua7v@hotmail.com
 ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
+ENV HOME /root
 ENV GOLANG_VERSION 1.9.1
+ENV GOPATH $HOME/.go
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 RUN apt-get update \
   && apt-get install -y openssh-server \
@@ -100,7 +103,6 @@ RUN echo $TZ > /etc/timezone \
   && mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force \
   && echo 'export GOPATH=$HOME/.go' >> .bashrc \
   && echo 'export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH' >> .bashrc \
-  && source ~/.bashrc \
   && go get -u github.com/nsf/gocode \
   && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && npm i -g --unsafe-perm=true --allow-root \
@@ -113,7 +115,6 @@ RUN echo $TZ > /etc/timezone \
   prettier \
   serve
 
-WORKDIR /data
 EXPOSE 22 3000
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
 VOLUME ["/data"]
