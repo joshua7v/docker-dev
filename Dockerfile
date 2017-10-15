@@ -7,6 +7,8 @@ ENV GIT_USER_EMAIL joshua7v@hotmail.com
 ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
 ENV GOLANG_VERSION 1.9.1
+ENV GOPATH $HOME/.go
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 RUN apt-get update \
   && apt-get install -y openssh-server \
@@ -88,6 +90,13 @@ RUN echo $TZ > /etc/timezone \
   && curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh \
   && bash ./installer.sh ~/.config/nvim \
   && rm installer.sh \
+  && sed -i "/filetype\ plugin\ indent\ on/ilet g:dein#install_progress_type = 'none'\nlet g:dein#install_message_type = 'none'\n" ~/.config/nvim/init.vim \
+  && sed -i "/'build':\ 'make'/d" ~/.config/nvim/init.vim \
+  && nvim +"call dein#install()" +qall \
+  && cd ~/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/rplugin/python3/deoplete/ujson/ \
+  && python3 setup.py build --build-base=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build --build-lib=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build \
+  && cd ~ \
+  && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
   && cp ~/.dot-files/tmux.conf ~/.tmux.conf \
   && mix local.hex --force \
   && mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force \
