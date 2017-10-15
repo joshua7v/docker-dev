@@ -3,20 +3,23 @@ services:
   dev:
     container_name: dev
     image: joshua7v/dev
+    hostname: dev
     ports:
       - "33000:3000"
+      - "34000:4000"
       - "37000:7000"
       - "30022:22"
     volumes:
-      - /Users/joshua/erinn:/data
+      - $HOME/erinn:/data
     networks:
       - dev
 
   db:
     container_name: postgres
     image: postgres
+    hostname: postgres
     volumes:
-      - /Users/joshua/erinn/pgdata/dev:/var/lib/postgresql/data
+      - $HOME/pgdata/dev:/var/lib/postgresql/data
     networks:
       - dev
 

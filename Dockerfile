@@ -6,6 +6,9 @@ ENV GIT_USER_NAME joshua7v
 ENV GIT_USER_EMAIL joshua7v@hotmail.com
 ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
+ENV GOLANG_VERSION 1.9.1
+ENV GOPATH $HOME/.go
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 RUN apt-get update \
   && apt-get install -y openssh-server \
@@ -66,6 +69,10 @@ RUN apt-get update \
   && mv tmux /usr/bin/tmux \
   && cd ~ \
   && rm -fr tmux-$TMUX_VERSION* \
+  && wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.linux-amd64.tar.gz \
+  && tar -C /usr/local -xzf go go$GOLANG_VERSION.linux-amd64.tar.gz \
+  && cd ~ \
+  && rm -fr go$GOLANG_VERSION* \
   && apt-get clean
 
 RUN echo $TZ > /etc/timezone \
@@ -86,6 +93,7 @@ RUN echo $TZ > /etc/timezone \
   && cp ~/.dot-files/tmux.conf ~/.tmux.conf \
   && mix local.hex --force \
   && mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force \
+  && go get -u github.com/nsf/gocode \
   && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && npm i -g --unsafe-perm=true --allow-root \
   typescript \
