@@ -104,6 +104,8 @@ RUN echo $TZ > /etc/timezone \
   && echo 'export GOPATH=$HOME/.go' >> .bashrc \
   && echo 'export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH' >> .bashrc \
   && go get -u github.com/nsf/gocode \
+  && pip3 install --upgrade pip \
+  && pip3 install pgcli \
   && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && npm i -g --unsafe-perm=true --allow-root \
   typescript \
