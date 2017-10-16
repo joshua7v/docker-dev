@@ -47,6 +47,7 @@ RUN apt-get update \
   tree \
   libevent-dev \
   ncurses-dev \
+  zsh \
   && mkdir /var/run/sshd \
   && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
   && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
@@ -74,9 +75,12 @@ RUN apt-get update \
   && tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz \
   && cd ~ \
   && rm -fr go$GOLANG_VERSION* \
+  && chsh -s $(which zsh) \
   && apt-get clean
 
-RUN echo $TZ > /etc/timezone \
+RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash \
+  && git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions \
+  && echo $TZ > /etc/timezone \
   && rm /etc/localtime \
   && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   && dpkg-reconfigure -f noninteractive tzdata \
@@ -86,6 +90,7 @@ RUN echo $TZ > /etc/timezone \
   && git clone https://github.com/joshua7v/dot-files ~/.dot-files \
   && cp ~/.dot-files/bashrc ~/.bashrc \
   && cp ~/.dot-files/bash_profile ~/.bash_profile \
+  && cp ~/.dot-files/zshrc ~/.zshrc \
   && mkdir -p ~/.config/nvim \
   && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
   && curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh \
