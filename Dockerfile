@@ -105,7 +105,6 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
   && cp ~/.dot-files/tmux.conf ~/.tmux.conf \
   && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm \
-  && tmux source ~/.tmux.conf \
   && ~/.tmux/plugins/tpm/bin/install_plugins \
   && mix local.hex --force \
   && mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force \
