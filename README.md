@@ -1,3 +1,17 @@
+# Introduction
+
+Packed Development Environment
+
+Crafted with ❤️
+
+currently supported environments:
+
+- elixir - phoenix
+- javascript / typescript - node
+- golang
+- elm
+- python3
+
 # Installation
 
 ```bash
