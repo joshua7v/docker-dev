@@ -120,6 +120,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   @angular/cli \
   elm \
   elm-format \
+  elm-live \
   jsctags \
   prettier \
   serve
