@@ -107,10 +107,18 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm \
   && ~/.tmux/plugins/tpm/bin/install_plugins \
   && mix local.hex --force \
+  && mix local.rebar --force \
   && mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force \
   && echo 'export GOPATH=$HOME/.go' >> .bashrc \
   && echo 'export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH' >> .bashrc \
   && go get -u github.com/nsf/gocode \
+  && git clone https://github.com/lpil/dogma \
+  && cd dogma \
+  && mix deps.get \
+  && mix escript.build \
+  && cp dogma /usr/local/bin/dogma \
+  && cd .. \
+  && rm -fr dogma \
   && pip3 install --upgrade pip \
   && pip3 install pgcli \
   && curl -o- -L https://yarnpkg.com/install.sh | bash \
@@ -121,6 +129,8 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   elm \
   elm-format \
   elm-live \
+  eslint \
+  tslint \
   jsctags \
   prettier \
   serve
