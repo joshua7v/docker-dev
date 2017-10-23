@@ -55,6 +55,8 @@ RUN apt-get update \
   && locale-gen en_US.UTF-8 \
   && pip3 install neovim \
   && cd ~ \
+
+  # Install rclone
   && curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip \
   && unzip rclone-current-linux-amd64.zip \
   && cd rclone-*-linux-amd64 \
@@ -64,6 +66,8 @@ RUN apt-get update \
   && mandb \
   && cd ~ \
   && rm -fr rclone* \
+
+  # Install tmux
   && wget https://github.com/tmux/tmux/releases/download/$TMUX_VERSION/tmux-$TMUX_VERSION.tar.gz \
   && tar -zxf tmux-$TMUX_VERSION.tar.gz \
   && cd tmux-$TMUX_VERSION \
@@ -71,26 +75,38 @@ RUN apt-get update \
   && mv tmux /usr/bin/tmux \
   && cd ~ \
   && rm -fr tmux-$TMUX_VERSION* \
+
+  # Install go
   && wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.linux-amd64.tar.gz \
   && tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz \
   && cd ~ \
   && rm -fr go$GOLANG_VERSION* \
+
+  # Change to zsh
   && chsh -s $(which zsh) \
   && apt-get clean
 
 RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash \
   && git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions \
+
+  # Fix time zone
   && echo $TZ > /etc/timezone \
   && rm /etc/localtime \
   && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   && dpkg-reconfigure -f noninteractive tzdata \
   && apt-get clean \
+
+  # Set default git user
   && git config --global user.name $GIT_USER_NAME \
   && git config --global user.email $GIT_USER_EMAIL \
+
+  # Restore shell settings
   && git clone https://github.com/joshua7v/dot-files ~/.dot-files \
   && cp ~/.dot-files/bashrc ~/.bashrc \
   && cp ~/.dot-files/bash_profile ~/.bash_profile \
   && cp ~/.dot-files/zshrc ~/.zshrc \
+
+  # Restore neovim settings
   && mkdir -p ~/.config/nvim \
   && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
   && curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh \
@@ -103,15 +119,16 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && python3 setup.py build --build-base=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build --build-lib=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build \
   && cd ~ \
   && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
+
+  # Restore tmux settings
   && cp ~/.dot-files/tmux.conf ~/.tmux.conf \
   && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm \
   && ~/.tmux/plugins/tpm/bin/install_plugins \
+
+  # Install elixir packages
   && mix local.hex --force \
   && mix local.rebar --force \
   && mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force \
-  && echo 'export GOPATH=$HOME/.go' >> .bashrc \
-  && echo 'export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH' >> .bashrc \
-  && go get -u github.com/nsf/gocode \
   && git clone https://github.com/lpil/dogma \
   && cd dogma \
   && mix deps.get \
@@ -119,12 +136,22 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && cp dogma /usr/local/bin/dogma \
   && cd .. \
   && rm -fr dogma \
+
+  # Install go packages
+  && echo 'export GOPATH=$HOME/.go' >> .bashrc \
+  && echo 'export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH' >> .bashrc \
+  && go get -u github.com/nsf/gocode \
+
+  # Install python packages
   && pip3 install --upgrade pip \
   && pip3 install pgcli \
+
+  # Install js / ts / elm packages
   && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && npm i -g --unsafe-perm=true --allow-root \
   typescript \
   create-react-app \
+  create-elm-app \
   @angular/cli \
   elm \
   elm-format \
