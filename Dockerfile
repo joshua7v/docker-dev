@@ -6,6 +6,7 @@ ENV GIT_USER_NAME joshua7v
 ENV GIT_USER_EMAIL joshua7v@hotmail.com
 ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
+ENV AESCRYPT_VERSION 3.13
 ENV HOME /root
 ENV GOLANG_VERSION 1.9.1
 ENV GOPATH $HOME/.go
@@ -66,6 +67,15 @@ RUN apt-get update \
   && mandb \
   && cd ~ \
   && rm -fr rclone* \
+
+# Install aescrypt
+  && wget https://www.aescrypt.com/download/v3/linux/aescrypt-$AESCRYPT_VERSION.tgz \
+  && tar -zxf aescrypt-$AESCRYPT_VERSION.tgz \
+  && cd aescrypt-$AESCRYPT_VERSION/src \
+  && make \
+  && make install \
+  && cd ../.. \
+  && rm -fr aescrypt-$AESCRYPT_VERSION \
 
   # Install tmux
   && wget https://github.com/tmux/tmux/releases/download/$TMUX_VERSION/tmux-$TMUX_VERSION.tar.gz \
