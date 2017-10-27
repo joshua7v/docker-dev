@@ -68,14 +68,14 @@ RUN apt-get update \
   && cd ~ \
   && rm -fr rclone* \
 
-# Install aescrypt
+  # Install aescrypt
   && wget https://www.aescrypt.com/download/v3/linux/aescrypt-$AESCRYPT_VERSION.tgz \
   && tar -zxf aescrypt-$AESCRYPT_VERSION.tgz \
   && cd aescrypt-$AESCRYPT_VERSION/src \
   && make \
   && make install \
   && cd ../.. \
-  && rm -fr aescrypt-$AESCRYPT_VERSION \
+  && rm -fr aescrypt-$AESCRYPT_VERSION* \
 
   # Install tmux
   && wget https://github.com/tmux/tmux/releases/download/$TMUX_VERSION/tmux-$TMUX_VERSION.tar.gz \
