@@ -187,7 +187,8 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   tslint \
   jsctags \
   prettier \
-  serve
+  serve \
+  aglio
 
 EXPOSE 22 3000
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
