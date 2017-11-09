@@ -19,7 +19,7 @@ services:
     image: postgres
     hostname: postgres
     volumes:
-      - $HOME/pgdata/dev:/var/lib/postgresql/data
+      - $HOME/erinn/db/postgres/data:/var/lib/postgresql/data
     networks:
       - dev
 
