@@ -14,7 +14,7 @@ services:
     networks:
       - dev
 
-  db:
+  postgres:
     container_name: postgres
     image: postgres
     hostname: postgres
@@ -22,6 +22,15 @@ services:
       - $HOME/erinn/db/postgres/data:/var/lib/postgresql/data
     networks:
       - dev
+
+#  mongo:
+#    container_name: mongo
+#    image: mongo
+#    hostname: mongo
+#    volumes:
+#      - $HOME/erinn/db/mongo/data:/data/db
+#    networks:
+#      - dev
 
 networks:
   dev:
