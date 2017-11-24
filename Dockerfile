@@ -11,7 +11,14 @@ ENV HOME /root
 ENV GOLANG_VERSION 1.9.1
 ENV GOPATH $HOME/.go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
+ENV NODE_VERSION 9.2.0
+ENV ELIXIR_VERSION 1.5.2
+ENV ERLANG_VERSION 20.1
+ENV GOLANG_VERSION 1.9
+ENV PYTHON_VERSION 3.6.2
+ENV ELM_VERSION 0.18.0
 
+RUN ln -snf /bin/bash /bin/sh
 RUN apt-get update \
   && apt-get install -y openssh-server \
   software-properties-common \
@@ -19,44 +26,54 @@ RUN apt-get update \
   ca-certificates \
   locales \
   tzdata \
+
+  # Install build dependencies
+  libevent-dev \
+  ncurses-dev \
+  build-essential \
+  clang \
+  automake \
+  autoconf \
+  libreadline-dev \
+  libncurses-dev \
+  libssl-dev \
+  libyaml-dev \
+  libxslt-dev \
+  libffi-dev \
+  libtool \
+  unixodbc-dev \
+  python3-dev \
+
+  # Install tools
+  silversearcher-ag \
+  unzip \
+  inotify-tools \
+  tree \
+  zsh \
+  jq \
   curl \
   wget \
-  && curl -sL https://deb.nodesource.com/setup_8.x | bash -  \
-  && wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && dpkg -i erlang-solutions_1.0_all.deb \
-  && add-apt-repository ppa:neovim-ppa/stable \
-  && apt-get update \
-  && apt-get install -y \
+  git \
   man \
   iputils-ping \
   net-tools \
   iftop \
   iotop \
-  git \
-  python3 \
-  python3-pip \
-  python3-dev \
-  nodejs \
-  esl-erlang \
-  elixir \
-  vim \
   htop \
-  neovim \
   ctags \
-  silversearcher-ag \
-  unzip \
-  inotify-tools \
-  tree \
-  libevent-dev \
-  ncurses-dev \
-  zsh \
-  clang \
-  jq \
+  vim \
+
+  # Install neovim
+  && add-apt-repository ppa:neovim-ppa/stable \
+  && apt-get update \
+  && apt-get install -y \
+  neovim \
+
   && mkdir /var/run/sshd \
   && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
   && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
   && echo 'root:root' |chpasswd \
   && locale-gen en_US.UTF-8 \
-  && pip3 install neovim \
   && cd ~ \
 
   # Install rclone
@@ -88,15 +105,33 @@ RUN apt-get update \
   && cd ~ \
   && rm -fr tmux-$TMUX_VERSION* \
 
-  # Install go
-  && wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.linux-amd64.tar.gz \
-  && tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz \
-  && cd ~ \
-  && rm -fr go$GOLANG_VERSION* \
-
   # Change to zsh
   && chsh -s $(which zsh) \
   && apt-get clean
+
+RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.0 \
+  && echo -e '\nsource $HOME/.asdf/asdf.sh' >> ~/.zshrc \
+  && echo -e '\nsource $HOME/.asdf/completions/asdf.bash' >> ~/.zshrc \
+  && source ~/.asdf/asdf.sh \
+  && asdf plugin-add nodejs \
+  && bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring \
+  && asdf plugin-add erlang \
+  && asdf plugin-add elixir \
+  && asdf plugin-add golang \
+  && asdf plugin-add python \
+  && asdf plugin-add elm \
+  && asdf install nodejs $NODE_VERSION \
+  && asdf install erlang $ERLANG_VERSION \
+  && asdf install elixir $ELIXIR_VERSION \
+  && asdf install golang $GOLANG_VERSION \
+  && asdf install python $PYTHON_VERSION \
+  && asdf install elm $ELM_VERSION \
+  && asdf global nodejs $NODE_VERSION \
+  && asdf global erlang $ERLANG_VERSION \
+  && asdf global elixir $ELIXIR_VERSION \
+  && asdf global golang $GOLANG_VERSION \
+  && asdf global python $PYTHON_VERSION \
+  && asdf global elm $ELM_VERSION
 
 RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash \
   && git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions \
@@ -135,24 +170,8 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && cp ~/.dot-files/bash_profile ~/.bash_profile \
   && cp ~/.dot-files/zshrc ~/.zshrc \
 
-  # Restore neovim settings
-  && mkdir -p ~/.config/nvim \
-  && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
-  && curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh \
-  && bash ./installer.sh ~/.config/nvim \
-  && rm installer.sh \
-  && sed -i "/filetype\ plugin\ indent\ on/ilet g:dein#install_progress_type = 'none'\nlet g:dein#install_message_type = 'none'\n" ~/.config/nvim/init.vim \
-  && sed -i "/'build':\ 'make'/d" ~/.config/nvim/init.vim \
-  && nvim +"call dein#install()" +qall \
-  && cd ~/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/rplugin/python3/deoplete/ujson/ \
-  && python3 setup.py build --build-base=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build --build-lib=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build \
-  && cd ~ \
-  && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
-
-  # Restore tmux settings
-  && cp ~/.dot-files/tmux.conf ~/.tmux.conf \
-  && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm \
-  && ~/.tmux/plugins/tpm/bin/install_plugins \
+  # Enable asdf
+  && source ~/.asdf/asdf.sh \
 
   # Install elixir packages
   && mix local.hex --force \
@@ -172,8 +191,8 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && go get -u github.com/nsf/gocode \
 
   # Install python packages
-  && pip3 install --upgrade pip \
-  && pip3 install pgcli \
+  && pip install --upgrade pip \
+  && pip install pgcli neovim \
 
   # Install js / ts / elm packages
   && curl -o- -L https://yarnpkg.com/install.sh | bash \
@@ -182,7 +201,6 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   create-react-app \
   create-elm-app \
   @angular/cli \
-  elm \
   elm-format \
   elm-live \
   eslint \
@@ -190,7 +208,26 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   jsctags \
   prettier \
   serve \
-  aglio
+  aglio \
+
+  # Restore neovim settings
+  && mkdir -p ~/.config/nvim \
+  && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
+  && curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh \
+  && bash ./installer.sh ~/.config/nvim \
+  && rm installer.sh \
+  && sed -i "/filetype\ plugin\ indent\ on/ilet g:dein#install_progress_type = 'none'\nlet g:dein#install_message_type = 'none'\n" ~/.config/nvim/init.vim \
+  && sed -i "/'build':\ 'make'/d" ~/.config/nvim/init.vim \
+  && nvim +"call dein#install()" +qall \
+  && cd ~/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/rplugin/python3/deoplete/ujson/ \
+  && python3 setup.py build --build-base=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build --build-lib=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build \
+  && cd ~ \
+  && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
+
+  # Restore tmux settings
+  && cp ~/.dot-files/tmux.conf ~/.tmux.conf \
+  && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm \
+  && ~/.tmux/plugins/tpm/bin/install_plugins
 
 EXPOSE 22 3000
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
