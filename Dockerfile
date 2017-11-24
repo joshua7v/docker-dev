@@ -21,7 +21,8 @@ RUN apt-get update \
 
   # Install build dependencies
   make \
-  libevent \
+  libevent-dev \
+  ncurses-dev \
   gcc \
   python3-dev \
 
