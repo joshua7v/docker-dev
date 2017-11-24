@@ -110,8 +110,6 @@ RUN apt-get update \
   && apt-get clean
 
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.0 \
-  && echo -e '\nsource $HOME/.asdf/asdf.sh' >> ~/.zshrc \
-  && echo -e '\nsource $HOME/.asdf/completions/asdf.bash' >> ~/.zshrc \
   && source ~/.asdf/asdf.sh \
   && asdf plugin-add nodejs \
   && bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring \
@@ -172,6 +170,8 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
 
   # Enable asdf
   && source ~/.asdf/asdf.sh \
+  && echo -e '\nsource $HOME/.asdf/asdf.sh' >> ~/.zshrc \
+  && echo -e '\nsource $HOME/.asdf/completions/asdf.bash' >> ~/.zshrc \
 
   # Install elixir packages
   && mix local.hex --force \
