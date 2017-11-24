@@ -8,15 +8,7 @@ ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
 ENV AESCRYPT_VERSION 3.13
 ENV HOME /root
-ENV GOLANG_VERSION 1.9.1
-ENV GOPATH $HOME/.go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 ENV NODE_VERSION 9.2.0
-ENV ELIXIR_VERSION 1.5.2
-ENV ERLANG_VERSION 20.1
-ENV GOLANG_VERSION 1.9
-ENV PYTHON_VERSION 3.6.2
-ENV ELM_VERSION 0.18.0
 
 RUN ln -snf /bin/bash /bin/sh
 RUN apt-get update \
@@ -28,20 +20,6 @@ RUN apt-get update \
   tzdata \
 
   # Install build dependencies
-  libevent-dev \
-  ncurses-dev \
-  build-essential \
-  clang \
-  automake \
-  autoconf \
-  libreadline-dev \
-  libncurses-dev \
-  libssl-dev \
-  libyaml-dev \
-  libxslt-dev \
-  libffi-dev \
-  libtool \
-  unixodbc-dev \
   python3-dev \
 
   # Install tools
@@ -110,28 +88,11 @@ RUN apt-get update \
   && apt-get clean
 
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.0 \
-  && echo -e '\nsource $HOME/.asdf/asdf.sh' >> ~/.zshrc \
-  && echo -e '\nsource $HOME/.asdf/completions/asdf.bash' >> ~/.zshrc \
   && source ~/.asdf/asdf.sh \
   && asdf plugin-add nodejs \
   && bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring \
-  && asdf plugin-add erlang \
-  && asdf plugin-add elixir \
-  && asdf plugin-add golang \
-  && asdf plugin-add python \
-  && asdf plugin-add elm \
   && asdf install nodejs $NODE_VERSION \
-  && asdf install erlang $ERLANG_VERSION \
-  && asdf install elixir $ELIXIR_VERSION \
-  && asdf install golang $GOLANG_VERSION \
-  && asdf install python $PYTHON_VERSION \
-  && asdf install elm $ELM_VERSION \
-  && asdf global nodejs $NODE_VERSION \
-  && asdf global erlang $ERLANG_VERSION \
-  && asdf global elixir $ELIXIR_VERSION \
-  && asdf global golang $GOLANG_VERSION \
-  && asdf global python $PYTHON_VERSION \
-  && asdf global elm $ELM_VERSION
+  && asdf global nodejs $NODE_VERSION
 
 RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash \
   && git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions \
@@ -172,23 +133,8 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
 
   # Enable asdf
   && source ~/.asdf/asdf.sh \
-
-  # Install elixir packages
-  && mix local.hex --force \
-  && mix local.rebar --force \
-  && mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force \
-  && git clone https://github.com/lpil/dogma \
-  && cd dogma \
-  && mix deps.get \
-  && mix escript.build \
-  && cp dogma /usr/local/bin/dogma \
-  && cd .. \
-  && rm -fr dogma \
-
-  # Install go packages
-  && echo 'export GOPATH=$HOME/.go' >> .bashrc \
-  && echo 'export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH' >> .bashrc \
-  && go get -u github.com/nsf/gocode \
+  && echo -e '\nsource $HOME/.asdf/asdf.sh' >> ~/.zshrc \
+  && echo -e '\nsource $HOME/.asdf/completions/asdf.bash' >> ~/.zshrc \
 
   # Install python packages
   && pip install --upgrade pip \
@@ -201,14 +147,11 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   create-react-app \
   create-elm-app \
   @angular/cli \
-  elm-format \
-  elm-live \
   eslint \
   tslint \
   jsctags \
   prettier \
   serve \
-  aglio \
 
   # Restore neovim settings
   && mkdir -p ~/.config/nvim \
