@@ -20,6 +20,7 @@ RUN apt-get update \
   tzdata \
 
   # Install build dependencies
+  make \
   python3-dev \
 
   # Install tools
