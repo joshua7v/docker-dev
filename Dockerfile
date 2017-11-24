@@ -21,6 +21,7 @@ RUN apt-get update \
 
   # Install build dependencies
   make \
+  gcc \
   python3-dev \
 
   # Install tools
