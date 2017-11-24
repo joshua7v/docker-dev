@@ -24,6 +24,8 @@ RUN apt-get update \
   libevent-dev \
   ncurses-dev \
   gcc \
+  python3 \
+  python3-pip \
   python3-dev \
 
   # Install tools
