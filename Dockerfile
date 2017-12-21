@@ -11,7 +11,7 @@ ENV HOME /root
 ENV GOLANG_VERSION 1.9.1
 ENV GOPATH $HOME/.go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-ENV NODE_VERSION 9.2.0
+ENV NODE_VERSION 9.3.0
 ENV ELIXIR_VERSION 1.5.2
 ENV ERLANG_VERSION 20.1
 ENV GOLANG_VERSION 1.9
@@ -195,7 +195,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && pip install pgcli neovim \
 
   # Install js / ts / elm packages
-  && curl -o- -L https://yarnpkg.com/install.sh | bash \
+  # && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && npm i -g --unsafe-perm=true --allow-root \
   typescript \
   create-react-app \
