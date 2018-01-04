@@ -2,12 +2,13 @@ version: "3"
 services:
   dev:
     container_name: dev
-    image: joshua7v/dev
+    image: joshua7v/dev:full
     hostname: dev
     ports:
-      - "33000:3000"
-      - "34000:4000"
+      - "33000-33010:3000-3010"
+      - "34000-34010:4000-4010"
       - "37000:7000"
+      - "39000:9000"
       - "30022:22"
     volumes:
       - $HOME/erinn:/data
