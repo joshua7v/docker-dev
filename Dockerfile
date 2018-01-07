@@ -8,7 +8,6 @@ ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
 ENV AESCRYPT_VERSION 3.13
 ENV HOME /root
-ENV GOLANG_VERSION 1.9.1
 ENV GOPATH $HOME/.go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 ENV NODE_VERSION 9.3.0
@@ -198,6 +197,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   # && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && npm i -g --unsafe-perm=true --allow-root \
   typescript \
+  ts-node \
   create-react-app \
   create-elm-app \
   @angular/cli \
