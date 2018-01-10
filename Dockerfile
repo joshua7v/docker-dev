@@ -62,11 +62,14 @@ RUN apt-get update \
   ctags \
   vim \
 
-  # Install neovim
+  # Install neovim and vifm
+  && apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0x908332071dd2e32e \
+  && echo "deb https://deb.best-hosting.cz/ubuntu/ xenial main" > /etc/apt/sources.list.d/vifm.list \
   && add-apt-repository ppa:neovim-ppa/stable \
   && apt-get update \
   && apt-get install -y \
   neovim \
+  bh-vifm \
 
   && mkdir /var/run/sshd \
   && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
@@ -223,6 +226,9 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && python3 setup.py build --build-base=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build --build-lib=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build \
   && cd ~ \
   && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
+
+  # Restore vifm settings
+  && cp -r ~/.dot-files/vifm ~/.config/vifm \
 
   # Restore tmux settings
   && cp ~/.dot-files/tmux.conf ~/.tmux.conf \
