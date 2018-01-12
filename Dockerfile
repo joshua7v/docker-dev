@@ -81,7 +81,7 @@ RUN apt-get update \
   # && apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0x908332071dd2e32e \
   # && echo "deb https://deb.best-hosting.cz/ubuntu/ xenial main" > /etc/apt/sources.list.d/vifm.list \
   # bh-vifm \
-  && curl -O https://ncu.dl.sourceforge.net/project/vifm/vifm/vifm-$VIFM_VERSION.tar.bz2 \
+  && wget -O vifm-$VIFM_VERSION.tar.bz2 "http://prdownloads.sourceforge.net/vifm/vifm-$VIFM_VERSION.tar.bz2?download" \
   && tar --bzip -xvf vifm-$VIFM_VERSION \
   && cd vifm-$VIFM_VERSION \
   && ./configure && make && make install \
