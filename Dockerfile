@@ -82,7 +82,7 @@ RUN apt-get update \
   # && echo "deb https://deb.best-hosting.cz/ubuntu/ xenial main" > /etc/apt/sources.list.d/vifm.list \
   # bh-vifm \
   && wget -O vifm-$VIFM_VERSION.tar.bz2 "http://prdownloads.sourceforge.net/vifm/vifm-$VIFM_VERSION.tar.bz2?download" \
-  && tar --bzip -xvf vifm-$VIFM_VERSION \
+  && tar --bzip -xvf vifm-$VIFM_VERSION.tar.bz2 \
   && cd vifm-$VIFM_VERSION \
   && ./configure && make && make install \
   && cd ~ \
