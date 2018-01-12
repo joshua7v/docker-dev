@@ -64,7 +64,7 @@ RUN apt-get update \
 
   # Install neovim and vifm
   && apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0x908332071dd2e32e \
-  && echo "deb https://deb.best-hosting.cz/ubuntu/ xenial main" > /etc/apt/sources.list.d/vifm.list \
+  && echo "deb http://deb.best-hosting.cz/ubuntu/ xenial main" > /etc/apt/sources.list.d/vifm.list \
   && add-apt-repository ppa:neovim-ppa/stable \
   && apt-get update \
   && apt-get install -y \
