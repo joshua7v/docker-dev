@@ -6,6 +6,7 @@ ENV GIT_USER_NAME joshua7v
 ENV GIT_USER_EMAIL joshua7v@hotmail.com
 ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
+ENV VIFM_VERSION 0.9
 ENV AESCRYPT_VERSION 3.13
 ENV HOME /root
 ENV GOPATH $HOME/.go
@@ -35,6 +36,7 @@ RUN apt-get update \
   autoconf \
   libreadline-dev \
   libncurses-dev \
+  libncursesw5-dev \
   libssl-dev \
   libyaml-dev \
   libxslt-dev \
@@ -62,14 +64,11 @@ RUN apt-get update \
   ctags \
   vim \
 
-  # Install neovim and vifm
-  && apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0x908332071dd2e32e \
-  && echo "deb http://deb.best-hosting.cz/ubuntu/ xenial main" > /etc/apt/sources.list.d/vifm.list \
+  # Install neovim
   && add-apt-repository ppa:neovim-ppa/stable \
   && apt-get update \
   && apt-get install -y \
   neovim \
-  bh-vifm \
 
   && mkdir /var/run/sshd \
   && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
@@ -77,6 +76,17 @@ RUN apt-get update \
   && echo 'root:root' |chpasswd \
   && locale-gen en_US.UTF-8 \
   && cd ~ \
+
+  # Install vifm
+  # && apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0x908332071dd2e32e \
+  # && echo "deb https://deb.best-hosting.cz/ubuntu/ xenial main" > /etc/apt/sources.list.d/vifm.list \
+  # bh-vifm \
+  && curl -O https://ncu.dl.sourceforge.net/project/vifm/vifm/vifm-$VIFM_VERSION.tar.bz2 \
+  && tar --bzip -zxf vifm-$VIFM_VERSION \
+  && cd vifm-$VIFM_VERSION \
+  && ./configure && make && make install \
+  && cd ~ \
+  && rm -fr vifm-$VIFM_VERSION* \
 
   # Install rclone
   && curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip \
