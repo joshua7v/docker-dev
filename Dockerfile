@@ -210,6 +210,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   tslint \
   jsctags \
   prettier \
+  pug-beautifier \
   serve \
   aglio \
 
