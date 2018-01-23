@@ -244,7 +244,8 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   # Restore tmux settings
   && cp ~/.dot-files/tmux.conf ~/.tmux.conf \
   && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm \
-  && ~/.tmux/plugins/tpm/bin/install_plugins
+  && ~/.tmux/plugins/tpm/bin/install_plugins \
+  && sed -i $'$i set -g @resurrect-dir \'/data/.tmux/resurrect\'' ~/.tmux.conf
 
 EXPOSE 22 3000
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
