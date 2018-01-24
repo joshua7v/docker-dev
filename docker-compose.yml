@@ -12,6 +12,7 @@ services:
       - "30022:22"
     volumes:
       - $HOME/erinn:/data
+      - $HOME/Downloads:/hole
     networks:
       - dev
 
