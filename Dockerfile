@@ -63,6 +63,7 @@ RUN apt-get update \
   htop \
   ctags \
   vim \
+  mongodb-clients \
 
   # Install neovim
   && add-apt-repository ppa:neovim-ppa/stable \

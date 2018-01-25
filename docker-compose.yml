@@ -25,14 +25,14 @@ services:
     networks:
       - dev
 
-#  mongo:
-#    container_name: mongo
-#    image: mongo
-#    hostname: mongo
-#    volumes:
-#      - $HOME/erinn/db/mongo/data:/data/db
-#    networks:
-#      - dev
+  mongo:
+    container_name: mongo
+    image: mongo
+    hostname: mongo
+    volumes:
+      - $HOME/erinn/db/mongo/data:/data/db
+    networks:
+      - dev
 
 networks:
   dev:
