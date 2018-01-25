@@ -222,6 +222,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   jsctags \
   prettier \
   pug-beautifier \
+  express-generator \
   serve \
   aglio \
 
