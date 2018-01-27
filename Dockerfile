@@ -63,7 +63,6 @@ RUN apt-get update \
   htop \
   ctags \
   vim \
-  mongodb-clients \
 
   # Install neovim
   && add-apt-repository ppa:neovim-ppa/stable \
@@ -117,6 +116,11 @@ RUN apt-get update \
   && mv tmux /usr/bin/tmux \
   && cd ~ \
   && rm -fr tmux-$TMUX_VERSION* \
+
+  # Install mongodb-org-shell tools
+  && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 \
+  && echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list \
+  && apt-get update && apt-get install -y mongodb-org-shell mongodb-org-tools \
 
   # Change to zsh
   && chsh -s $(which zsh) \
