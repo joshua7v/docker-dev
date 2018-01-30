@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 MAINTAINER Joshua <joshua7v@hotmail.com>
 
 ENV TERM xterm-256color
-ENV GIT_USER_NAME joshua7v
+ENV GIT_USER_NAME "Joshua Shen"
 ENV GIT_USER_EMAIL joshua7v@hotmail.com
 ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
