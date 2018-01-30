@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-MAINTAINER Joshua <joshua7v@hotmail.com>
+LABEL maintainer="joshua7v@hotmail.com"
 
 ENV TERM xterm-256color
 ENV GIT_USER_NAME "Joshua Shen"
