@@ -2,17 +2,16 @@ FROM ubuntu:16.04
 LABEL maintainer="joshua7v@hotmail.com"
 
 ENV TERM xterm-256color
-ENV GIT_USER_NAME "Joshua Shen"
+ENV GIT_USER_NAME Joshua\ Shen
 ENV GIT_USER_EMAIL joshua7v@hotmail.com
 ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
 ENV VIFM_VERSION 0.9
-ENV AESCRYPT_VERSION 3.13
 ENV HOME /root
 ENV GOPATH $HOME/.go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 ENV NODE_VERSION 9.5.0
-ENV ELIXIR_VERSION 1.5.2
+ENV ELIXIR_VERSION 1.6.1
 ENV ERLANG_VERSION 20.1
 ENV GOLANG_VERSION 1.9
 ENV PYTHON_VERSION 3.6.2
@@ -98,15 +97,6 @@ RUN apt-get update \
   && mandb \
   && cd ~ \
   && rm -fr rclone* \
-
-  # Install aescrypt
-  && wget https://www.aescrypt.com/download/v3/linux/aescrypt-$AESCRYPT_VERSION.tgz \
-  && tar -zxf aescrypt-$AESCRYPT_VERSION.tgz \
-  && cd aescrypt-$AESCRYPT_VERSION/src \
-  && make \
-  && make install \
-  && cd ../.. \
-  && rm -fr aescrypt-$AESCRYPT_VERSION* \
 
   # Install tmux
   && wget https://github.com/tmux/tmux/releases/download/$TMUX_VERSION/tmux-$TMUX_VERSION.tar.gz \
