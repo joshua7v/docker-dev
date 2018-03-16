@@ -2,14 +2,12 @@ FROM ubuntu:16.04
 LABEL maintainer="joshua7v@hotmail.com"
 
 ENV TERM xterm-256color
-ENV GIT_USER_NAME Joshua\ Shen
+ENV GIT_USER_NAME joshua7v
 ENV GIT_USER_EMAIL joshua7v@hotmail.com
 ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
 ENV VIFM_VERSION 0.9
 ENV HOME /root
-ENV GOPATH $HOME/.go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 ENV NODE_VERSION 9.5.0
 ENV ELIXIR_VERSION 1.6.1
 ENV ERLANG_VERSION 20.1
@@ -199,11 +197,12 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
 
   # Install python packages
   && pip install --upgrade pip \
-  && pip install pgcli neovim \
+  && pip install pgcli neovim jedi \
 
   # Install js / ts / elm packages
   # && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && npm i -g --unsafe-perm=true --allow-root \
+  tern \
   typescript \
   ts-node \
   create-react-app \
@@ -233,6 +232,10 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && python3 setup.py build --build-base=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build --build-lib=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build \
   && cd ~ \
   && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
+
+  # Restore user settings
+  && cp ~/.dot-files/tern-project ~/.tern-project \
+  && cp ~/.dot-files/editorconfig ~/.editorconfig \
 
   # Restore vifm settings
   && cp -r ~/.dot-files/vifm ~/.config/vifm \
