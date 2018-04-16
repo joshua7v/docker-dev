@@ -2,8 +2,6 @@ FROM ubuntu:16.04
 LABEL maintainer="joshua7v@hotmail.com"
 
 ENV TERM xterm-256color
-ENV GIT_USER_NAME joshua7v
-ENV GIT_USER_EMAIL joshua7v@hotmail.com
 ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.6
 ENV VIFM_VERSION 0.9
@@ -145,10 +143,6 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   && dpkg-reconfigure -f noninteractive tzdata \
   && apt-get clean \
-
-  # Set default git user
-  && git config --global user.name $GIT_USER_NAME \
-  && git config --global user.email $GIT_USER_EMAIL \
 
   # Set git differ
   && curl -O https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy \
