@@ -23,6 +23,7 @@ RUN apt-get update \
   tzdata \
 
   # Install build dependencies
+  pkg-config \
   libevent-dev \
   ncurses-dev \
   build-essential \
@@ -56,7 +57,6 @@ RUN apt-get update \
   iftop \
   iotop \
   htop \
-  ctags \
   vim \
 
   # Install neovim
@@ -102,6 +102,15 @@ RUN apt-get update \
   && mv tmux /usr/bin/tmux \
   && cd ~ \
   && rm -fr tmux-$TMUX_VERSION* \
+
+  # Install ctags
+  && git clone https://github.com/universal-ctags/ctags \
+  && cd ctags \
+  && ./autogen.sh \
+  && ./configure \
+  && make && make install \
+  && cd ~ \
+  && rm -fr ctags \
 
   # Install mongodb-org-shell tools
   && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 \
@@ -206,7 +215,6 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   elm-live \
   eslint \
   tslint \
-  jsctags \
   prettier \
   pug-beautifier \
   express-generator \
@@ -230,6 +238,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   # Restore user settings
   && cp ~/.dot-files/tern-project ~/.tern-project \
   && cp ~/.dot-files/editorconfig ~/.editorconfig \
+  && cp -r ~/.dot-files/ctags.d ~/.ctags.d \
 
   # Restore vifm settings
   && cp -r ~/.dot-files/vifm ~/.config/vifm \
