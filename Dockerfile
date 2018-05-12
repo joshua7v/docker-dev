@@ -208,6 +208,8 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   tern \
   typescript \
   ts-node \
+  typeorm \
+  npm-check-updates \
   create-react-app \
   create-elm-app \
   @angular/cli \
