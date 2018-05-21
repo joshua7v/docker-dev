@@ -124,6 +124,7 @@ RUN apt-get update \
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.0 \
   && source ~/.asdf/asdf.sh \
   && asdf plugin-add nodejs \
+  && export GNUPGHOME="${ASDF_DIR:-$HOME/.asdf}/keyrings/nodejs" && mkdir -p "$GNUPGHOME" && chmod 0700 "$GNUPGHOME" \
   && bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring \
   && asdf plugin-add erlang \
   && asdf plugin-add elixir \
