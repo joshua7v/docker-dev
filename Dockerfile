@@ -6,7 +6,7 @@ ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.7
 ENV VIFM_VERSION 0.9
 ENV HOME /root
-ENV NODE_VERSION 10.1.0
+ENV NODE_VERSION 10.4.0
 ENV ELIXIR_VERSION 1.6.1
 ENV ERLANG_VERSION 20.1
 ENV GOLANG_VERSION 1.9
@@ -206,6 +206,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   # Install js / ts / elm packages
   # && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && npm i -g --unsafe-perm=true --allow-root \
+  neovim \
   tern \
   typescript \
   ts-node \
