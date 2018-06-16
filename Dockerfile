@@ -6,7 +6,7 @@ ENV TZ Aisa/Shanghai
 ENV TMUX_VERSION 2.7
 ENV VIFM_VERSION 0.9
 ENV HOME /root
-ENV NODE_VERSION 10.4.0
+ENV NODE_VERSION 10.x
 ENV ELIXIR_VERSION 1.6.1
 ENV ERLANG_VERSION 20.1
 ENV GOLANG_VERSION 1.9
@@ -121,6 +121,9 @@ RUN apt-get update \
   && chsh -s $(which zsh) \
   && apt-get clean
 
+RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION | bash \
+  && apt-get install nodejs
+
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.0 \
   && source ~/.asdf/asdf.sh \
   && asdf plugin-add nodejs \
@@ -131,13 +134,12 @@ RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.0 \
   && asdf plugin-add golang \
   && asdf plugin-add python \
   && asdf plugin-add elm \
-  && asdf install nodejs $NODE_VERSION \
   && asdf install erlang $ERLANG_VERSION \
   && asdf install elixir $ELIXIR_VERSION \
   && asdf install golang $GOLANG_VERSION \
   && asdf install python $PYTHON_VERSION \
   && asdf install elm $ELM_VERSION \
-  && asdf global nodejs $NODE_VERSION \
+  && asdf global nodejs system \
   && asdf global erlang $ERLANG_VERSION \
   && asdf global elixir $ELIXIR_VERSION \
   && asdf global golang $GOLANG_VERSION \
