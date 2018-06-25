@@ -20,10 +20,10 @@ RUN apt-get update \
   apt-transport-https \
   ca-certificates \
   locales \
-  tzdata \
+  tzdata
 
-  # Install build dependencies
-  pkg-config \
+# Install build dependencies
+RUN apt-get install -y pkg-config \
   libevent-dev \
   ncurses-dev \
   build-essential \
@@ -39,10 +39,10 @@ RUN apt-get update \
   libffi-dev \
   libtool \
   unixodbc-dev \
-  python3-dev \
+  python3-dev
 
-  # Install tools
-  silversearcher-ag \
+# Install tools
+RUN apt-get install -y silversearcher-ag \
   unzip \
   inotify-tools \
   tree \
@@ -57,10 +57,10 @@ RUN apt-get update \
   iftop \
   iotop \
   htop \
-  vim \
+  vim
 
-  # Install neovim
-  && add-apt-repository ppa:neovim-ppa/stable \
+# Install neovim
+RUN apt-get install -y add-apt-repository ppa:neovim-ppa/stable \
   && apt-get update \
   && apt-get install -y \
   neovim \
@@ -69,22 +69,21 @@ RUN apt-get update \
   && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
   && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
   && echo 'root:root' |chpasswd \
-  && locale-gen en_US.UTF-8 \
-  && cd ~ \
+  && locale-gen en_US.UTF-8
 
-  # Install vifm
-  # && apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0x908332071dd2e32e \
-  # && echo "deb https://deb.best-hosting.cz/ubuntu/ xenial main" > /etc/apt/sources.list.d/vifm.list \
-  # bh-vifm \
-  && wget -O vifm-$VIFM_VERSION.tar.bz2 "http://prdownloads.sourceforge.net/vifm/vifm-$VIFM_VERSION.tar.bz2?download" \
+# Install vifm
+# && apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0x908332071dd2e32e \
+# && echo "deb https://deb.best-hosting.cz/ubuntu/ xenial main" > /etc/apt/sources.list.d/vifm.list \
+# bh-vifm \
+RUN wget -O vifm-$VIFM_VERSION.tar.bz2 "http://prdownloads.sourceforge.net/vifm/vifm-$VIFM_VERSION.tar.bz2?download" \
   && tar --bzip -xvf vifm-$VIFM_VERSION.tar.bz2 \
   && cd vifm-$VIFM_VERSION \
   && ./configure && make && make install \
   && cd ~ \
-  && rm -fr vifm-$VIFM_VERSION* \
+  && rm -fr vifm-$VIFM_VERSION*
 
-  # Install rclone
-  && curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip \
+# Install rclone
+RUN curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip \
   && unzip rclone-current-linux-amd64.zip \
   && cd rclone-*-linux-amd64 \
   && cp rclone /usr/bin/ \
@@ -92,38 +91,39 @@ RUN apt-get update \
   && cp rclone.1 /usr/local/share/man/man1/ \
   && mandb \
   && cd ~ \
-  && rm -fr rclone* \
+  && rm -fr rclone*
 
-  # Install tmux
-  && wget https://github.com/tmux/tmux/releases/download/$TMUX_VERSION/tmux-$TMUX_VERSION.tar.gz \
+# Install tmux
+RUN wget https://github.com/tmux/tmux/releases/download/$TMUX_VERSION/tmux-$TMUX_VERSION.tar.gz \
   && tar -zxf tmux-$TMUX_VERSION.tar.gz \
   && cd tmux-$TMUX_VERSION \
   && ./configure && make \
   && mv tmux /usr/bin/tmux \
   && cd ~ \
-  && rm -fr tmux-$TMUX_VERSION* \
+  && rm -fr tmux-$TMUX_VERSION*
 
-  # Install ctags
-  && git clone https://github.com/universal-ctags/ctags \
+# Install ctags
+RUN git clone https://github.com/universal-ctags/ctags \
   && cd ctags \
   && ./autogen.sh \
   && ./configure \
   && make && make install \
   && cd ~ \
-  && rm -fr ctags \
+  && rm -fr ctags
 
-  # Install mongodb-org-shell tools
-  && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 \
+# Install mongodb-org-shell tools
+RUN && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 \
   && echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list \
-  && apt-get update && apt-get install -y mongodb-org-shell mongodb-org-tools \
+  && apt-get update && apt-get install -y mongodb-org-shell mongodb-org-tools
 
-  # Change to zsh
-  && chsh -s $(which zsh) \
+# Change to zsh
+RUN chsh -s $(which zsh) \
   && apt-get clean
 
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION | bash \
   && apt-get install nodejs
 
+# Install asdf
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.0 \
   && source ~/.asdf/asdf.sh \
   && asdf plugin-add nodejs \
@@ -204,6 +204,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   # Install python packages
   && pip install --upgrade pip \
   && pip install pgcli neovim jedi \
+  && asdf reshim python \
 
   # Install js / ts / elm packages
   # && curl -o- -L https://yarnpkg.com/install.sh | bash \
