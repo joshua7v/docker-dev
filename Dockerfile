@@ -12,6 +12,7 @@ ENV ERLANG_VERSION 21.0.1
 ENV GOLANG_VERSION 1.9
 ENV PYTHON_VERSION 3.6.2
 ENV ELM_VERSION 0.18.0
+ENV KERL_CONFIGURE_OPTIONS "--disable-debug --without-javac"
 
 RUN ln -snf /bin/bash /bin/sh
 RUN apt-get update \
