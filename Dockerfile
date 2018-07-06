@@ -40,7 +40,9 @@ RUN apt-get install -y pkg-config \
   libffi-dev \
   libtool \
   unixodbc-dev \
-  python3-dev
+  python3-dev \
+  xsltproc \
+  fop
 
 # Install tools
 RUN apt-get install -y silversearcher-ag \
