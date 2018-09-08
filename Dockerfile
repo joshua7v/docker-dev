@@ -202,7 +202,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   # Install go packages
   && echo 'export GOPATH=$HOME/.go' >> .bashrc \
   && echo 'export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH' >> .bashrc \
-  && go get -u github.com/nsf/gocode \
+  && go get -u github.com/mdempsky/gocode \
 
   # Install python packages
   && pip install --upgrade pip \
