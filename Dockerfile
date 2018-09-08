@@ -238,8 +238,12 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && bash ./installer.sh ~/.config/nvim \
   && rm installer.sh \
   && sed -i "/filetype\ plugin\ indent\ on/ilet g:dein#install_progress_type = 'none'\nlet g:dein#install_message_type = 'none'\n" ~/.config/nvim/init.vim \
-  && sed -i "/'build':\ 'make'/d" ~/.config/nvim/init.vim \
+  && sed -i "/'build':/d" ~/.config/nvim/init.vim \
   && nvim +"call dein#install()" +qall \
+  && cd ~/.config/nvim/plugged/repos/github.com/Yggdroot/LeaderF && ./install.sh \
+  && cd ~/.config/nvim/plugged/repos/github.com/autozimu/LanguageClient-neovim && ./install.sh \
+  && cd ~/.config/nvim/plugged/repos/github.com/mhartington/nvim-typescript && ./install.sh \
+  && cd ~/.config/nvim/plugged/repos/github.com/mdempsky/gocode/nvim && ./symlink.sh \
   # && cd ~/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/rplugin/python3/deoplete/ujson/ \
   # && python3 setup.py build --build-base=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build --build-lib=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build \
   && cd ~ \
