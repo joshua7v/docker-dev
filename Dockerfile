@@ -265,7 +265,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
 
   # Install lsp servers
   && cd ~ \
-  && curl -O https://github.com/JakeBecker/elixir-ls/releases/download/v0.2.23/elixir-ls.zip \
+  && wget https://github.com/JakeBecker/elixir-ls/releases/download/v0.2.23/elixir-ls.zip \
   && unzip -d ~/elixir-ls elixir-ls.zip \
   && rm -f ./elixir-ls.zip
 
