@@ -261,7 +261,13 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && cp ~/.dot-files/tmux.conf ~/.tmux.conf \
   && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm \
   && ~/.tmux/plugins/tpm/bin/install_plugins \
-  && sed -i $'$i set -g @resurrect-dir \'/data/.tmux/resurrect\'' ~/.tmux.conf
+  && sed -i $'$i set -g @resurrect-dir \'/data/.tmux/resurrect\'' ~/.tmux.conf \
+
+  # Install lsp servers
+  && cd ~ \
+  && curl -O https://github.com/JakeBecker/elixir-ls/releases/download/v0.2.23/elixir-ls.zip \
+  && unzip -d ~/elixir-ls elixir-ls.zip \
+  && rm -f ./elixir-ls.zip
 
 EXPOSE 22 3000
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
