@@ -253,6 +253,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && cp ~/.dot-files/tern-project ~/.tern-project \
   && cp ~/.dot-files/editorconfig ~/.editorconfig \
   && cp -r ~/.dot-files/ctags.d ~/.ctags.d \
+  && cp ~/.dot-files/vimrc ~/.vimrc \
 
   # Restore vifm settings
   && cp -r ~/.dot-files/vifm ~/.config/vifm \
