@@ -57,8 +57,6 @@ RUN apt-get install -y silversearcher-ag \
   man \
   iputils-ping \
   net-tools \
-  iftop \
-  iotop \
   htop \
   vim
 
@@ -191,17 +189,9 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && mix local.hex --force \
   && mix local.rebar --force \
   && mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force \
-  && git clone https://github.com/lpil/dogma \
-  && cd dogma \
-  && mix deps.get \
-  && mix escript.build \
-  && cp dogma /usr/local/bin/dogma \
-  && cd .. \
-  && rm -fr dogma \
 
   # Install go packages
-  && echo 'export GOPATH=$HOME/.go' >> .bashrc \
-  && echo 'export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH' >> .bashrc \
+  && source ~/.zshrc \
   && go get -u github.com/mdempsky/gocode \
 
   # Install python packages
@@ -213,7 +203,6 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   # && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && npm i -g --unsafe-perm=true --allow-root \
   neovim \
-  tern \
   typescript \
   ts-node \
   typeorm \
@@ -229,7 +218,6 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   pug-beautifier \
   express-generator \
   serve \
-  aglio \
 
   # Restore neovim settings
   && mkdir -p ~/.config/nvim \
@@ -250,7 +238,6 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && cp ~/.dot-files/neovim/init.vim ~/.config/nvim/init.vim \
 
   # Restore user settings
-  && cp ~/.dot-files/tern-project ~/.tern-project \
   && cp ~/.dot-files/editorconfig ~/.editorconfig \
   && cp -r ~/.dot-files/ctags.d ~/.ctags.d \
   && cp ~/.dot-files/vimrc ~/.vimrc \
