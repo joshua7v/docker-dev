@@ -231,7 +231,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
   && cd ~/.config/nvim/plugged/repos/github.com/Yggdroot/LeaderF && ./install.sh \
   && cd ~/.config/nvim/plugged/repos/github.com/autozimu/LanguageClient-neovim && ./install.sh \
   && cd ~/.config/nvim/plugged/repos/github.com/mhartington/nvim-typescript && ./install.sh \
-  && cd ~/.config/nvim/plugged/repos/github.com/mdempsky/gocode/nvim && ./symlink.sh \
+  # && cd ~/.config/nvim/plugged/repos/github.com/mdempsky/gocode/nvim && ./symlink.sh \
   # && cd ~/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/rplugin/python3/deoplete/ujson/ \
   # && python3 setup.py build --build-base=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build --build-lib=/root/.config/nvim/plugged/repos/github.com/zchee/deoplete-go/build \
   && cd ~ \
