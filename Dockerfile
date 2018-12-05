@@ -196,7 +196,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
 
   # Install python packages
   && pip install --upgrade pip \
-  && pip install pgcli neovim jedi \
+  && pip install pgcli neovim pynvim jedi \
   && asdf reshim python \
 
   # Install js / ts / elm packages
